@@ -1,0 +1,16 @@
+# Ignore all
+*
+
+# Unignore
+!.gitignore
+!README.md
+!*.cpp
+!*.h
+
+!src/
+!include/
+!tests/
+
+
+!CMakeLists.txt
+!cmake/
