@@ -53,6 +53,14 @@ class Star {
       ******************************/
     void printSummary() const;
 
+    /******************************
+    * Comparison methods
+    ******************************/
+    bool isOlderThan(const Star& other) const;
+    bool isBrighterThan(const Star& other) const;
+    bool isMoreMassiveThan(const Star& other) const;
+
+
 private:
     /****************************
      * Attributes

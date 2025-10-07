@@ -122,7 +122,7 @@ void Star::setAge(double observed_age_years) {
      * @note
      **************************/
     this->observed_age_years = observed_age_years;
-}
+} 
 
 double Star::massInKg() const {
     /*************************
@@ -134,7 +134,7 @@ double Star::massInKg() const {
     **************************/
 
     return mass_Msun * M_SUN;
-}
+} // end of massInKg
 
 double Star::luminosityInWatts() const {
     /*************************
@@ -145,7 +145,7 @@ double Star::luminosityInWatts() const {
     * @note L☉ = 3.828e26 W
     **************************/
     return luminosity_Lsun * L_SUN;
-}
+} // end of luminosityInWatts
 
 double Star::computeFuelLifetime() const {
     /*************************
@@ -165,7 +165,7 @@ double Star::computeFuelLifetime() const {
     double E = F * M_kg * C2 * ETA; // total energy available from fusion in Joules
     double T_seconds = E / L_watts; // lifetime in seconds
     return T_seconds / SECONDS_PER_YEAR; // convert to years
-}
+} // end of computeFuelLifetime
 
 void Star::printSummary() const {
     std::cout << "----------------------------------------\n";
@@ -175,6 +175,38 @@ void Star::printSummary() const {
     std::cout << "Observed Age: " << this->observed_age_years << " years\n";
     std::cout << "Fuel Lifetime Estimate: " << this->computeFuelLifetime() << " years\n";
     std::cout << "----------------------------------------\n";
+} // end of printSummary
+
+
+bool Star::isOlderThan(const Star& other) const {
+    /*************************
+     * Compare ages of two stars
+     * @param other Another Star object
+     * @exception None
+     * @return true if this star is older
+     * @note
+     **************************/
+    return observed_age_years > other.getAge();
 }
 
+bool Star::isBrighterThan(const Star& other) const {
+    /*************************
+     * Compare luminosities of two stars
+     * @param other Another Star object
+     * @exception None
+     * @return true if this star is brighter
+     * @note
+     **************************/
+    return luminosity_Lsun > other.getLuminosity();
+}
 
+bool Star::isMoreMassiveThan(const Star& other) const {
+    /*************************
+     * Compare masses of two stars
+     * @param other Another Star object
+     * @exception None  
+     * @return true if this star is more massive
+     * @note
+     **************************/
+    return mass_Msun > other.getMass();
+}
