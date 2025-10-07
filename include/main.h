@@ -13,11 +13,9 @@
 #include "integrators.h"
 #include "differentiators.h"
 #include "errors.h"
-#include "stellar_models.h"
-#include "stellar_mass.h"
+#include "star_physics.h"
 #include "finance.h"
 #include "util.h"
-#include "star.h"
 
 
 #include <fstream>
