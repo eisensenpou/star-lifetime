@@ -8,6 +8,7 @@
 !*.h
 
 !src/
+!depreciated_src/
 !include/
 !tests/
 !resources/
