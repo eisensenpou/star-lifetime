@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 include_directories(include)
 
 # Build executable from source files
-add_executable(stockflow
+add_executable(start_lifetime
     src/main.cpp
     src/integrators.cpp
     src/differentiators.cpp
@@ -18,4 +18,5 @@ add_executable(stockflow
     src/util.cpp
     src/stellar_mass.cpp
     src/star.cpp
+    resources/app_icon.rc
 )
