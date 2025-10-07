@@ -167,3 +167,14 @@ double Star::computeFuelLifetime() const {
     return T_seconds / SECONDS_PER_YEAR; // convert to years
 }
 
+void Star::printSummary() const {
+    std::cout << "----------------------------------------\n";
+    std::cout << "Star: " << name << "\n";
+    std::cout << "Mass: " << mass_Msun << " M☉ (" << this->massInKg() << " kg)\n";
+    std::cout << "Luminosity: " << luminosity_Lsun << " L☉ (" << this->luminosityInWatts() << " W)\n";
+    std::cout << "Observed Age: " << this->observed_age_years << " years\n";
+    std::cout << "Fuel Lifetime Estimate: " << this->computeFuelLifetime() << " years\n";
+    std::cout << "----------------------------------------\n";
+}
+
+

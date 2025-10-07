@@ -10,6 +10,7 @@
 #define STAR_H
 
 #include <string>
+#include <iostream>
 
 #define M_SUN  (1.989e30) // kg
 #define L_SUN  (3.828e26) // Watts
@@ -50,6 +51,7 @@ class Star {
      /******************************
       * Printing
       ******************************/
+    void printSummary() const;
 
 private:
     /****************************

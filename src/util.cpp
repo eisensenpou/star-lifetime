@@ -8,6 +8,15 @@
 #include "util.h"
 
 void write_csv(const std::string& filename, const std::vector<std::string>& headers, const std::vector<std::vector<std::string>>& rows) {
+    /******************************
+     * Write data to a CSV file
+     * @param filename Name of the output CSV file
+     * @param headers Vector of column headers
+     * @param rows Vector of vectors containing data rows
+     * @exception std::runtime_error if file cannot be opened for writing
+     * @return None
+     * @note
+     *****************************/
     std::ofstream file(filename);
     if (!file.is_open()) {
         throw std::runtime_error("Failed to open file for writing.");
