@@ -23,7 +23,7 @@ class Star {
     * Constructor / Destructor
     ******************************/
     Star(const std::string &name, double mass_Msun, double luminosity_Lsun, double observed_age_years);
-    ~Star() {}
+    ~Star();
 
     /******************************
     * Getters / Accessors

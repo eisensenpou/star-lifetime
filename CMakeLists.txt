@@ -9,14 +9,13 @@ include_directories(include)
 
 # Build executable from source files
 add_executable(stockflow
-#    src/main.cpp
+    src/main.cpp
     src/integrators.cpp
     src/differentiators.cpp
     src/errors.cpp
-    src/stellar.cpp
+    src/stellar_models.cpp
     src/finance.cpp
     src/util.cpp
     src/stellar_mass.cpp
-    src/main_star_test.cpp
     src/star.cpp
 )

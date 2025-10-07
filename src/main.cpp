@@ -1,78 +1,73 @@
 /************************
- *  Author : Sinan Demir
- *  Date   : 09/23/2025
- *  File   : main.cpp
- *  Purpose: Main file for the project
+ * File   : main.cpp
+ * Author : Sinan Demir
+ * Date   : 10/06/2025
+ * Purpose: Main program to test the Star class and stellar lifetime model.
  ************************/
 
 #include "main.h"
-#include "stellar_mass.h"
-
 
 int main() {
-    double S0 = 10.0;
-    double T_guess = 20.0;
+    std::cout << std::scientific << std::setprecision(3);
+    std::cout << "=== Stellar Lifetime Simulation ===\n";
 
-    // -----------------------------
-    // Part 1: Luminosity model tests
-    // -----------------------------
-    struct Model {
-        const char* name;
-        double (*L)(double);
-    } models[] = {
-        {"Constant",   L_const},
-        {"ExpDecay",   L_exp_decay},
-        {"Sinusoidal", L_sinusoidal}
-    };
+    // -------------------------------
+    // Create sample Star objects
+    // -------------------------------
+    Star sun("Sun", 1.0, 1.0, 4.6e9);
+    Star sirius("Sirius A", 2.1, 25.0, 2.4e8);
+    Star proxima("Proxima Centauri", 0.12, 0.0017, 4.85e9);
+    Star betelgeuse("Betelgeuse", 20.0, 126000.0, 1.0e7);
 
-    for (auto& model : models) {
-        std::vector<std::vector<std::string>> rows;
+    // Store in a vector
+    std::vector<Star> stars = {sun, sirius, proxima, betelgeuse};
 
-        for (int n : {10, 20, 40, 80, 160}) {
-            double T_trap = estimate_lifetime(S0, model.L, T_guess, n, false);
-            double T_simp = estimate_lifetime(S0, model.L, T_guess, n, true);
-
-            rows.push_back({
-                std::to_string(n),
-                std::to_string(T_trap),
-                std::to_string(T_simp)
-            });
-        }
-
-        // Save CSV to results folder
-        std::string filename = "../results/" + std::string(model.name) + "_results.csv";
-        write_csv(filename,
-                  {"n", "Trap Lifetime", "Simp Lifetime"},
-                  rows);
-
-        std::cout << "Saved results for " << model.name
-                  << " to " << filename << "\n";
+    // -------------------------------
+    // Print each star summary
+    // -------------------------------
+    for (const auto& s : stars) {
+        s.printSummary();
     }
 
-    // -----------------------------
-    // Part 2: Stellar mass–lifetime tests
-    // -----------------------------
-    std::cout << std::scientific << std::setprecision(3);
+    // -------------------------------
+    // Compare stars (example)
+    // -------------------------------
+    std::cout << "\n=== Comparative Analysis ===\n";
+    if (sirius.isMoreMassiveThan(sun)) {
+        std::cout << sirius.getName() << " is more massive than " << sun.getName() << ".\n";
+    }
+    if (sun.isOlderThan(sirius)) {
+        std::cout << sun.getName() << " is older than " << sirius.getName() << ".\n";
+    }
+    if (betelgeuse.isBrighterThan(sun)) {
+        std::cout << betelgeuse.getName() << " is much brighter than " << sun.getName() << ".\n";
+    }
 
-    std::vector<std::vector<std::string>> mass_rows;
-    for (double M : {0.5, 1.0, 2.0, 5.0, 10.0}) {
-        double T = lifetime(M * 1.989e30); // convert Msun → kg
-        std::cout << "Mass = " << M << " M(sun)"
-                  << " | Lifetime ~= " << T << " years\n";
+    // -------------------------------
+    // Save results to CSV
+    // -------------------------------
+    std::vector<std::vector<std::string>> rows;
+    for (const auto& s : stars) {
+        double lifetime_pred = s.computeFuelLifetime();
+        double fuel_frac = 1.0 - (s.getAge() / lifetime_pred);
 
-        mass_rows.push_back({
-            std::to_string(M),
-            std::to_string(T)
+        rows.push_back({
+            s.getName(),
+            std::to_string(s.getMass()),
+            std::to_string(s.getLuminosity()),
+            std::to_string(s.getAge()),
+            std::to_string(lifetime_pred),
+            std::to_string(fuel_frac)
         });
     }
 
-    // Save CSV for stellar mass results
-    std::string mass_filename = "../results/stellar_mass_results.csv";
-    write_csv(mass_filename,
-              {"Mass (Msun)", "Lifetime (years)"},
-              mass_rows);
+    write_csv("../results/star_lifetime_summary.csv",
+              {"Name", "Mass(Msun)", "Luminosity(Lsun)", "Observed Age (yrs)",
+               "Predicted Lifetime (yrs)", "Fuel Fraction Remaining"},
+              rows);
 
-    std::cout << "Saved stellar mass lifetimes to " << mass_filename << "\n";
+    std::cout << "\nResults saved to ../results/star_lifetime_summary.csv\n";
+    std::cout << "Simulation complete.\n";
 
     return 0;
-}  // end of main
+}

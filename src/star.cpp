@@ -174,3 +174,11 @@ double Star::computeFuelLifetime() const {
     double M_kg = massInKg();
     return lifetime(M_kg); // reuse your tested function
 }
+
+double Star::massInKg() const {
+    return mass_Msun * M_SUN;
+}
+
+double Star::luminosityInWatts() const {
+    return luminosity_Lsun * L_SUN;
+}
