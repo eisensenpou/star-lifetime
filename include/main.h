@@ -13,10 +13,13 @@
 #include "integrators.h"
 #include "differentiators.h"
 #include "errors.h"
-#include "stellar.h"
+#include "stellar_models.h"
 #include "stellar_mass.h"
 #include "finance.h"
 #include "util.h"
+#include "star.h"
+
+
 #include <fstream>
 #include <string>
 #include <sstream>

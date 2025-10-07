@@ -7,7 +7,7 @@
  ***************************/
  
 
-#include "stellar.h"
+#include "stellar_models.h"
 
 // Generic function to estimate stellar lifetime
 double estimate_lifetime(double S0,

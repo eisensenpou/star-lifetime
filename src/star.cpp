@@ -124,48 +124,7 @@ void Star::setAge(double observed_age_years) {
     this->observed_age_years = observed_age_years;
 } 
 
-double Star::massInKg() const {
-    /*************************
-    * Convert mass from solar masses to kg
-    * @param None
-    * @exception None
-    * @return Mass in kg
-    * @note M☉ = 1.989e30 kg
-    **************************/
 
-    return mass_Msun * M_SUN;
-} // end of massInKg
-
-double Star::luminosityInWatts() const {
-    /*************************
-    * Convert luminosity from solar luminosities to watts
-    * @param None
-    * @exception None
-    * @return Luminosity in watts
-    * @note L☉ = 3.828e26 W
-    **************************/
-    return luminosity_Lsun * L_SUN;
-} // end of luminosityInWatts
-
-double Star::computeFuelLifetime() const {
-    /*************************
-    * Compute the fuel lifetime of the star using the formula τ ~ E / L
-    * where E is the total energy available from hydrogen fusion
-    * and L is the luminosity of the star
-    * @param None
-    * @exception None
-    * @return Fuel lifetime in years
-    * @note f = 0.1, eta = 0.007, c^2 = 9.0e16 m^2/s^2, seconds_per_year = 3.154e7
-    **************************/
-
-
-    double M_kg = massInKg(); // mass in kg
-    double L_watts = luminosityInWatts(); // luminosity in watts
-
-    double E = F * M_kg * C2 * ETA; // total energy available from fusion in Joules
-    double T_seconds = E / L_watts; // lifetime in seconds
-    return T_seconds / SECONDS_PER_YEAR; // convert to years
-} // end of computeFuelLifetime
 
 void Star::printSummary() const {
     std::cout << "----------------------------------------\n";
@@ -209,4 +168,9 @@ bool Star::isMoreMassiveThan(const Star& other) const {
      * @note
      **************************/
     return mass_Msun > other.getMass();
+}
+
+double Star::computeFuelLifetime() const {
+    double M_kg = massInKg();
+    return lifetime(M_kg); // reuse your tested function
 }

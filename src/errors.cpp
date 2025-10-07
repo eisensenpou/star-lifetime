@@ -46,7 +46,8 @@ double simpson_error(double a, double b, int n, double max_fourth_derivative){
      * @param max_fourth_derivative: Maximum fourth derivative of the function
      * @return: Simpson's rule error estimate
      *************************/
-    return std::pow((b - a) / n, 5) / 180 * std::pow(max_fourth_derivative, 5); // Simpson's rule error estimate: https://en.wikipedia.org/wiki/Simpson%27s_rule
+    return -((std::pow(b - a, 5)) / (180.0 * std::pow(n, 4))) * max_fourth_derivative;
+    // Simpson's rule error estimate: https://en.wikipedia.org/wiki/Simpson%27s_rule
 }  // end simpson_error
 
 
@@ -59,6 +60,7 @@ double trapezoid_error(double a, double b, int n, double max_second_derivative){
      * @param max_second_derivative: Maximum second derivative of the function
      * @return: Trapezoid rule error estimate
      *************************/
-    return std::pow((b - a) / n, 3) / 12 * std::pow(max_second_derivative, 3); // Trapezoid rule error estimate: https://en.wikipedia.org/wiki/Trapezoidal_rule
+    return -((std::pow(b - a, 3)) / (12.0 * std::pow(n, 2))) * max_second_derivative;
+     // Trapezoid rule error estimate: https://en.wikipedia.org/wiki/Trapezoidal_rule
 } // end trapezoid_error
 

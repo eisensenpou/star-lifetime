@@ -12,12 +12,14 @@
 #ifndef STELLAR_MASS_H
 #define STELLAR_MASS_H
 // Physical constants
-const double M_sun = 1.989e30;        // Sun mass in kg
-const double L_sun = 3.828e26;        // Sun luminosity in W
-const double c2   = 9.0e16;           // constant (m/s)^2
-const double f    = 0.1;              // fraction of mass available for fusion
-const double eta  = 0.007;            // efficiency coefficient
-const double seconds_per_year = 60.0 * 60.0 * 24.0 * 365.0;
+
+#define M_SUN  (1.989e30) // kg
+#define L_SUN  (3.828e26) // Watts
+#define F (0.1) // fraction of mass that is hydrogen available for fusion
+#define ETA (0.007) // efficiency of mass to energy conversion in fusion
+#define C2 (9.0e16) // speed of light squared in m^2/s^2
+#define SECONDS_PER_YEAR (3.154e7) // seconds in a year
+
 
 // Fuel stock in Joules
 double fuel_stock(double M);
