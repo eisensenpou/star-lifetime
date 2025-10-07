@@ -18,4 +18,5 @@ add_executable(stockflow
     src/util.cpp
     src/stellar_mass.cpp
     src/main_star_test.cpp
+    src/star.cpp
 )
