@@ -1,6 +1,6 @@
 /*************************
  * Author : Sinan Demir
- * Date   : 10/07/2025
+ * Date   : 10/09/2025
  * File   : star_physics.cpp
  * Purpose: Consolidated implementation for stellar physics and models.
  *          This unifies the following original sources:
@@ -9,7 +9,9 @@
  *             - star.cpp (10/06/2025)
  *************************/
 
-#include "star_physics.h"
+#include "physics/star_physics.h"
+
+namespace physics::stellar {
 
 /************************
  * Implementation: Physics core functions
@@ -68,8 +70,8 @@ double estimate_lifetime(double S0,
      * @return            Scaled lifetime estimate where ∫_0^T L(t) dt ≈ S0
      *************************/
     double burned = use_simpson
-                    ? simpsons_rule(L, 0, T_guess, n)
-                    : trapezoid_rule(L, 0, T_guess, n);
+                    ? num_analysis::integration::simpsons_rule(L, 0, T_guess, n)
+                    : num_analysis::integration::trapezoid_rule(L, 0, T_guess, n);
 
     // Scale guess so that total fuel matches S0
     // Idea: if burned(T_guess) != S0, rescale proportionally
@@ -91,14 +93,14 @@ double L_const(double /*t*/) {
 
 double L_exp_decay(double t) {
     /*************************
-     * Exponentially decaying luminosity (toy model)
-     * @param t time
-     * @return L0 * exp(-k t), with L0 = 1.0, k = 0.1
+     * Exponentially decaying luminosity model (physically scaled)
+     * @param t time in years
+     * @return L_SUN * exp(-k * t), with k ≈ 1e-10 (slow decay)
      *************************/
-    double L0 = 1.0;  // initial luminosity
-    double k  = 0.1;  // decay rate
-    return L0 * std::exp(-k * t);
+    const double k = 1e-10; // per year decay rate
+    return L_SUN * std::exp(-k * t);
 }
+
 
 double L_sinusoidal(double t) {
     /*************************
@@ -293,8 +295,8 @@ void Star::printSummary() const {
      **************************/
     std::cout << "----------------------------------------\n";
     std::cout << "Star: " << name << "\n";
-    std::cout << "Mass: " << mass_Msun << " M\xE2\x98\x89 (" << this->massInKg() << " kg)\n";
-    std::cout << "Luminosity: " << luminosity_Lsun << " L\xE2\x98\x89 (" << this->luminosityInWatts() << " W)\n";
+    std::cout << "Mass: " << mass_Msun << " M☉ (" << this->massInKg() << " kg)\n";
+    std::cout << "Luminosity: " << luminosity_Lsun << " L☉ (" << this->luminosityInWatts() << " W)\n";
     std::cout << "Observed Age: " << this->observed_age_years << " years\n";
     std::cout << "Fuel Lifetime Estimate: " << this->computeFuelLifetime() << " years\n";
     std::cout << "----------------------------------------\n";
@@ -362,3 +364,5 @@ void Star::evolve(double t_final, double dt) {
     }
     observed_age_years += time;
 }
+
+} // namespace physics::stellar

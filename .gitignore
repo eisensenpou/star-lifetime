@@ -8,8 +8,11 @@
 !*.h
 
 !src/
-!deprecated_src/
+!src/num_analysis/
+!src/physics/
 !include/
+!include/num_analysis
+!include/physics
 !tests/
 !resources/
 !resources/app_icon.rc

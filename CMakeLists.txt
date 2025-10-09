@@ -5,23 +5,21 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # ===============================
-# Source and include directories
+# Directory setup
 # ===============================
-set(SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
+set(SRC_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/src")
+set(INC_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/include")
 set(RES_DIR "${CMAKE_CURRENT_SOURCE_DIR}/resources")
 
 # ===============================
-# Source files
+# Source file collection
 # ===============================
-set(SRC_FILES
-    ${SRC_DIR}/main.cpp
-    ${SRC_DIR}/integrators.cpp
-    ${SRC_DIR}/differentiators.cpp
-    ${SRC_DIR}/errors.cpp
-    ${SRC_DIR}/finance.cpp
-    ${SRC_DIR}/util.cpp
-    ${SRC_DIR}/star_physics.cpp   
-    ${RES_DIR}/app_icon.rc
+file(GLOB_RECURSE SRC_FILES
+    "${SRC_ROOT}/main.cpp"
+    "${SRC_ROOT}/num_analysis/*.cpp"
+    "${SRC_ROOT}/physics/*.cpp"
+    "${SRC_ROOT}/*.cpp"
+    "${RES_DIR}/app_icon.rc"
 )
 
 # ===============================
@@ -29,11 +27,14 @@ set(SRC_FILES
 # ===============================
 add_executable(star_lifetime ${SRC_FILES})
 
-# Include directory for headers
+# ===============================
+# Include directories
+# ===============================
 target_include_directories(star_lifetime
     PUBLIC
-        ${SRC_DIR}               
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
+        ${INC_ROOT}
+        ${INC_ROOT}/num_analysis
+        ${INC_ROOT}/physics
 )
 
 # ===============================
@@ -50,3 +51,5 @@ endif()
 # ===============================
 message(STATUS "Configured target: star_lifetime")
 message(STATUS "Using C++ standard: ${CMAKE_CXX_STANDARD}")
+message(STATUS "Source root: ${SRC_ROOT}")
+message(STATUS "Include root: ${INC_ROOT}")

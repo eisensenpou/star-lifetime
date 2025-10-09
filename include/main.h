@@ -9,12 +9,10 @@
 #ifndef MAIN_H
 #define MAIN_H 
 
-
-#include "integrators.h"
-#include "differentiators.h"
-#include "errors.h"
-#include "star_physics.h"
-#include "finance.h"
+#include "num_analysis/integration.h"
+#include "num_analysis/differentiation.h"
+#include "num_analysis/errors.h"
+#include "physics/star_physics.h"
 #include "util.h"
 
 
