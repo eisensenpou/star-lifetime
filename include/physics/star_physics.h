@@ -16,6 +16,9 @@
 #include <iostream>
 #include <cmath>
 #include <stdexcept>
+#include <iomanip>
+#include <vector>
+#include <cassert>
 
 /*************************
  * Project Includes
@@ -27,12 +30,14 @@
 /*************************
  * Physical constants
  *************************/
-#define M_SUN  (1.989e30)           // kg
-#define L_SUN  (3.828e26)           // Watts
-#define F      (0.1)                // hydrogen mass fraction
-#define ETA    (0.007)              // efficiency of fusion
-#define C2     (9.0e16)             // speed of light squared (m²/s²)
-#define SECONDS_PER_YEAR (3.154e7)  // seconds in a year
+namespace physics::constants {
+    constexpr double F = 0.1;
+    constexpr double ETA = 0.007;
+    constexpr double C2 = 9.0e16;
+    constexpr double L_SUN = 3.828e26;
+    constexpr double M_SUN = 1.989e30;
+    constexpr double SECONDS_PER_YEAR = 3.154e7;
+}
 
 namespace physics::stellar {
 
