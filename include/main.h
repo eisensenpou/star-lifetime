@@ -13,9 +13,8 @@
 #include "num_analysis/differentiation.h"
 #include "num_analysis/errors.h"
 #include "physics/star_physics.h"
+#include "physics/constants.h"
 #include "util.h"
-
-
 #include <fstream>
 #include <string>
 #include <sstream>
