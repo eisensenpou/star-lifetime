@@ -14,6 +14,7 @@
  *************************/
 #include <string>
 #include <iostream>
+#include <fstream>
 #include <cmath>
 #include <stdexcept>
 #include <iomanip>
@@ -26,18 +27,9 @@
 #include "num_analysis/integration.h"
 #include "num_analysis/differentiation.h"
 #include "num_analysis/errors.h"
+#include "physics/constants.h"
 
-/*************************
- * Physical constants
- *************************/
-namespace physics::constants {
-    constexpr double F = 0.1;
-    constexpr double ETA = 0.007;
-    constexpr double C2 = 9.0e16;
-    constexpr double L_SUN = 3.828e26;
-    constexpr double M_SUN = 1.989e30;
-    constexpr double SECONDS_PER_YEAR = 3.154e7;
-}
+using namespace physics::constants;
 
 namespace physics::stellar {
 
@@ -64,6 +56,9 @@ namespace physics::stellar {
     double L_const(double t);
     double L_exp_decay(double t);
     double L_sinusoidal(double t);
+    
+    // Table generation
+    void generate_lifetime_table(int num_points = 50);
 
     /*************************
      * Star class (Data + Behavior)
@@ -102,6 +97,8 @@ namespace physics::stellar {
         // Evolution model
         void evolve(double t_final, double dt);
 
+
+        
     private:
         std::string name;
         double mass_Msun;

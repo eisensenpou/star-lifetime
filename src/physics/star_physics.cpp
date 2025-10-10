@@ -364,5 +364,38 @@ void Star::evolve(double t_final, double dt) {
     }
     observed_age_years += time;
 }
+void generate_lifetime_table(int num_points) {
+    /*************************
+     * Generates a CSV table of stellar lifetimes
+     * for a range of masses (0.1–20 M☉)
+     * @param num_points: number of mass samples
+     * @exception None
+     * @return None
+     * @note
+     *************************/
+    const double min_mass = 0.1 * M_SUN;
+    const double max_mass = 20.0 * M_SUN;
+    const std::string file_path = "../results/lifetime_table.csv";
+
+    std::ofstream out(file_path);
+    if (!out.is_open()) {
+        throw std::runtime_error("Could not open output file: " + file_path);
+    }
+
+    out << "Mass(Msun),Luminosity(Lsun),Lifetime(years)\n";
+
+    for (int i = 0; i < num_points; ++i) {
+        double frac = static_cast<double>(i) / (num_points - 1);
+        double M = min_mass + frac * (max_mass - min_mass);
+        double L = luminosity(M);
+        double T = lifetime(M);
+
+        out << (M / M_SUN) << "," << (L / L_SUN) << "," << T << "\n";
+    }
+
+    out.close();
+    std::cout << "Lifetime table generated at: " << file_path << "\n";
+}
+
 
 } // namespace physics::stellar
