@@ -1,119 +1,131 @@
-# star-lifetime  
+# Star Lifetime Project
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)  
-[![Build Status](https://img.shields.io/github/actions/workflow/status/eisensenpou/star-lifetime/ci.yml?branch=main)](https://github.com/eisensenpou/star-lifetime/actions)  
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-## Description  
-**star-lifetime** is a C++ library and command‐line tool to estimate the lifetime of stars given their mass (in solar masses) and optionally metallicity or other physical parameters. Its goal is to provide a compact, easy‐to‐use implementation for educational or research use, with clear code and minimal dependencies.
+## Overview
+**Star Lifetime** is a C++ project developed by **Sinan Demir** for a **Calculus II course project**.  
+The goal is to model and compute the lifetime of stars using mathematical and physical principles, implemented with structured numerical analysis and modular namespaces.
 
-## Features  
-- Fast computation of main‐sequence lifetime (and optionally other stages) based on stellar parameters.  
-- Support for different metallicities or compositions (if configured).  
-- Command‐line interface for quick use and library interface for integration in other code.  
-- Unit tests and example usage to validate correctness.  
-- Modular design to allow extension or substitution of physical models.
-
-## Getting Started  
-
-### Prerequisites  
-- A C++17‐compatible compiler (GCC, Clang, MSVC)  
-- CMake version ≥ 3.x (for build orchestration)  
-- Git (to clone the repository)  
-- (Optional) Any third-party libraries or dependencies documented in `CMakeLists.txt`  
-- Tested on Linux/macOS; Windows support may require minor adjustments.
-
-### Installing / Building  
-1. Clone the repository  
-   ```bash
-   git clone https://github.com/eisensenpou/star-lifetime.git  
-   cd star-lifetime  
-   ```  
-2. Create and enter a build directory  
-   ```bash
-   mkdir build && cd build  
-   cmake ..  
-   make  
-   ```  
-   For a release build:  
-   ```bash
-   cmake .. -DCMAKE_BUILD_TYPE=Release  
-   make  
-   ```  
-3. Run tests (if present)  
-   ```bash
-   make test  
-   ```  
-4. (Optional) Install the library/tool globally  
-   ```bash
-   make install  
-   ```  
-   By default, this installs into `/usr/local` (or as configured).
-
-### Usage  
-#### Command‐line mode  
-```bash
-./star-lifetime --mass 1.0 --metallicity 0.014  
-# Example output: Lifetime = 10.0 Gyr  
-```  
-Additional parameters may include `--stage main‐sequence`, `--units Gyr`, etc.
-
-#### Library mode  
-In your C++ code:  
-```cpp
-#include "StarLifetime.hpp"
-
-int main() {
-    StarLifetime sl(/*mass=*/1.0, /*metallicity=*/0.014);
-    double lifetimeGyr = sl.compute();
-    std::cout << "Lifetime: " << lifetimeGyr << " Gyr\n";
-    return 0;
-}
-```  
-
-### Examples  
-- Estimate the lifetime of a 2 M☉ star at solar metallicity:  
-  ```bash
-  ./star-lifetime --mass 2.0 --metallicity 0.014  
-  # → Lifetime: ~1.0 Gyr  
-  ```  
-- Use the library interface in your application (see above) to embed lifetime calculations.
-
-## Project Structure  
-```
-/star-lifetime/
- ├── src/                 # Implementation files  
- ├── include/             # Public headers  
- ├── tests/               # Unit tests  
- ├── examples/            # Example usage code  
- ├── CMakeLists.txt       # Build configuration  
- ├── README.md            # You are reading this  
- └── LICENSE              # MIT license  
-```
-
-## Contributing  
-Contributions are welcome ! Please follow these steps:  
-1. Fork the repository  
-2. Create a feature branch (`git checkout -b feature/your-feature`)  
-3. Commit your changes (`git commit -am 'Add feature X'`)  
-4. Push to your branch (`git push origin feature/your-feature`)  
-5. Create a Pull Request on GitHub  
-Please include unit tests for new functionality, update documentation if you add or change behavior, and follow the code style in the project.
-
-## License  
-This project is licensed under the [MIT License](LICENSE) — see the LICENSE file for full details.
-
-## Authors & Acknowledgments  
-- **Eisen Senpou** — original creator, design & implementation  
-- Thank you to all contributors who have submitted issues, pull requests, improvements.  
-- Inspired by standard stellar-evolution theory and pedagogical astronomy frameworks.
-
-## Roadmap / Future Work  
-- Extend support to post‐main‐sequence lifetimes (giant branch, supernova, white dwarf phases)  
-- Add wrappers for other languages (Python, Julia) for easier integration in data science workflows  
-- Improve the physical model: add effects of rotation, binary interaction, differential metallicity, mass loss  
-- Provide a web‐based API or a dockerized command-line version for easier deployment  
-- Add more extensive benchmarking, validation against stellar modelling data sets  
+This project combines **numerical methods**, **astrophysical modeling**, and **computational design** into a clean, educational, and extensible C++ framework.
 
 ---
 
-Thank you for using **star-lifetime** and happy calculating!  
+## 🧠 Project Purpose
+The program estimates **stellar lifetime**, luminosity, and fuel consumption based on stellar mass and physical constants.  
+It is designed to demonstrate the application of integral and differential calculus in physics, particularly in the study of stellar evolution.
+
+---
+
+## ⚙️ Namespaces & Structure
+
+### **1. `num::analysis`**
+Provides core numerical methods used in scientific computations.
+- `integration` — Numerical integration algorithms (Trapezoidal, Simpson, etc.)
+- `differentiation` — Numerical differentiation (finite differences)
+- `errors` — Error propagation and accuracy estimation
+- `ode` — (planned) Ordinary Differential Equation solvers
+
+### **2. `physics::stellar`**
+Implements core stellar physics models.
+- `fuel_stock(double M)` — Estimates the hydrogen fuel available for fusion (Joules)
+- `luminosity(double M)` — Calculates luminosity in watts
+- `lifetime(double M)` — Estimates stellar lifetime in years
+- `Star` class — Encapsulates stellar properties and computed parameters
+
+### **3. `physics::constants`**
+Holds universal and astrophysical constants (e.g., speed of light squared `C2`, energy conversion efficiency `ETA`, etc.).
+
+---
+
+## 🧩 Example API Usage
+
+```cpp
+#include "physics/star_physics.h"
+#include <iostream>
+using namespace physics::stellar;
+
+int main() {
+    double mass = 2.0; // Solar masses
+    double L = luminosity(mass);
+    double T = lifetime(mass);
+
+    std::cout << "Luminosity: " << L << " W\n";
+    std::cout << "Lifetime: " << T << " years\n";
+    return 0;
+}
+```
+
+Command-line example (once compiled):
+```bash
+./star_lifetime --mass 2.0
+# Output: Luminosity = ... W, Lifetime = ... years
+```
+
+---
+
+## 🛠️ Build Instructions
+
+### Requirements
+- **C++17 or later**
+- **CMake 3.10+**
+- Works on Linux, macOS, and Windows (MSVC)
+
+### Build Steps
+```bash
+git clone https://github.com/eisensenpou/star-lifetime.git
+cd star-lifetime
+mkdir build && cd build
+cmake ..
+make
+```
+
+To run:
+```bash
+./star_lifetime
+```
+
+---
+
+## 📁 Project Structure
+```
+/star-lifetime/
+ ├── src/
+ │   ├── physics/
+ │   │   ├── star_physics.cpp
+ │   │   ├── constants.h
+ │   │   └── ...
+ │   ├── num_analysis/
+ │   │   ├── integration.cpp
+ │   │   ├── differentiation.cpp
+ │   │   ├── errors.cpp
+ │   │   └── ...
+ │   └── main.cpp
+ ├── include/
+ ├── CMakeLists.txt
+ ├── LICENSE
+ └── README.md
+```
+
+---
+
+## 🧪 Educational Focus
+This project demonstrates:
+- Applications of calculus in real-world physics.
+- Numerical integration and differentiation applied to stellar models.
+- How modular C++ design supports scientific computation.
+
+---
+
+## 🧑‍💻 Author
+**Sinan Demir**  
+Calculus II Project – 2025  
+No external contributors.
+
+---
+
+## 📜 License
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+*“Where mathematics meets the stars.”*
