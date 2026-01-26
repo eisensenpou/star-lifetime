@@ -24,8 +24,6 @@ file(GLOB_RECURSE SRC_FILES
     "${SRC_ROOT}/num_analysis/*.cpp"
     "${SRC_ROOT}/physics/*.cpp"
     "${SRC_ROOT}/util.cpp"
-    "${SRC_ROOT}/finance.cpp"
-    "${RES_DIR}/app_icon.rc"
 )
 
 # ===============================

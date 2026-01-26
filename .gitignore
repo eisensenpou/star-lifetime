@@ -16,7 +16,10 @@
 !tests/
 !resources/
 !resources/app_icon.rc
-
 !resources/app_icon.rc    # feel free to change with your own icon file
+!docs/
+!docs/**
+!.github
+!.github/**
 !CMakeLists.txt
 !cmake/

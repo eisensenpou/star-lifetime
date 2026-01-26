@@ -3,18 +3,18 @@
  * Date   : 09/23/2025
  * File   : integrators.h
  * Purpose: Header file for integrators.cpp — contains numerical integration
- *           function declarations inside the num_analysis::integration namespace.
+ *           function declarations inside the num_analysis::integration
+ * namespace.
  ****************************/
 
 #ifndef INTEGRATION_H
 #define INTEGRATION_H
 
-#include <functional>
-#include <stdexcept>
 #include <cmath>
-#include <iostream>
+#include <functional>
 #include <iomanip>
-
+#include <iostream>
+#include <stdexcept>
 
 #define M_PI 3.14159265358979323846
 
@@ -27,12 +27,14 @@
 
 namespace num_analysis::integration {
 
-    // Composite Trapezoid Rule
-    double trapezoid_rule(std::function<double(double)> f, double a, double b, int n);
+// Composite Trapezoid Rule
+double trapezoid_rule(std::function<double(double)> f, double a, double b,
+                      int n);
 
-    // Simpson's Rule (requires n to be even)
-    double simpsons_rule(std::function<double(double)> f, double a, double b, int n);
+// Simpson's Rule (requires n to be even)
+double simpsons_rule(std::function<double(double)> f, double a, double b,
+                     int n);
 
-}
+} // namespace num_analysis::integration
 
 #endif // INTEGRATION_H
