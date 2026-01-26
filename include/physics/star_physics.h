@@ -12,23 +12,22 @@
 /*************************
  * Standard Library Includes
  *************************/
-#include <string>
-#include <iostream>
-#include <fstream>
-#include <cmath>
-#include <stdexcept>
-#include <iomanip>
-#include <vector>
 #include <cassert>
+#include <cmath>
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+#include <stdexcept>
+#include <string>
+#include <vector>
 
 /*************************
  * Project Includes
  *************************/
-#include "num_analysis/integration.h"
 #include "num_analysis/differentiation.h"
 #include "num_analysis/errors.h"
+#include "num_analysis/integration.h"
 #include "physics/constants.h"
-
 
 // fix this sinan | | |
 //                v v v
@@ -36,78 +35,74 @@ using namespace physics::constants;
 
 namespace physics::stellar {
 
-    /*************************
-     * Core Physics Functions
-     *************************/
+/*************************
+ * Core Physics Functions
+ *************************/
 
-    double fuel_stock(double M);     // Available nuclear fuel (Joules)
-    double luminosity(double M);     // Luminosity (Watts)
-    double lifetime(double M);       // Stellar lifetime (years)
+double fuel_stock(double M); // Available nuclear fuel (Joules)
+double luminosity(double M); // Luminosity (Watts)
+double lifetime(double M);   // Stellar lifetime (years)
 
-    /*************************
-     * Numerical lifetime estimation via integration
-     *************************/
-    double estimate_lifetime(double S0,
-                             double (*L)(double),
-                             double T_guess,
-                             int n,
-                             bool use_simpson);
+/*************************
+ * Numerical lifetime estimation via integration
+ *************************/
+double estimate_lifetime(double S0, double (*L)(double), double T_guess, int n,
+                         bool use_simpson);
 
-    /*************************
-     * Example luminosity functions
-     *************************/
-    double L_const(double t);
-    double L_exp_decay(double t);
-    double L_sinusoidal(double t);
-    
-    // Table generation
-    void generate_lifetime_table(int num_points = 50);
+/*************************
+ * Example luminosity functions
+ *************************/
+double L_const(double t);
+double L_exp_decay(double t);
+double L_sinusoidal(double t);
 
-    /*************************
-     * Star class (Data + Behavior)
-     *************************/
-    class Star {
+// Table generation
+void generate_lifetime_table(int num_points = 50);
 
-    public:
-        Star(const std::string &name, double mass_Msun, double luminosity_Lsun, double observed_age_years);
-        ~Star();
+/*************************
+ * Star class (Data + Behavior)
+ *************************/
+class Star {
 
-        // Getters
-        std::string getName() const;
-        double getMass() const;
-        double getLuminosity() const;
-        double getAge() const;
+public:
+  Star(const std::string &name, double mass_Msun, double luminosity_Lsun,
+       double observed_age_years);
+  ~Star();
 
-        // Core calculations
-        double computeFuelLifetime() const;
-        double luminosityInWatts() const;
-        double massInKg() const;
+  // Getters
+  std::string getName() const;
+  double getMass() const;
+  double getLuminosity() const;
+  double getAge() const;
 
-        // Setters
-        void setName(const std::string& name);
-        void setMass(double mass_Msun);
-        void setLuminosity(double luminosity_Lsun);
-        void setAge(double observed_age_years);
+  // Core calculations
+  double computeFuelLifetime() const;
+  double luminosityInWatts() const;
+  double massInKg() const;
 
-        // Display
-        void printSummary() const;
+  // Setters
+  void setName(const std::string &name);
+  void setMass(double mass_Msun);
+  void setLuminosity(double luminosity_Lsun);
+  void setAge(double observed_age_years);
 
-        // Comparisons
-        bool isOlderThan(const Star& other) const;
-        bool isBrighterThan(const Star& other) const;
-        bool isMoreMassiveThan(const Star& other) const;
+  // Display
+  void printSummary() const;
 
-        // Evolution model
-        void evolve(double t_final, double dt);
+  // Comparisons
+  bool isOlderThan(const Star &other) const;
+  bool isBrighterThan(const Star &other) const;
+  bool isMoreMassiveThan(const Star &other) const;
 
+  // Evolution model
+  void evolve(double t_final, double dt);
 
-        
-    private:
-        std::string name;
-        double mass_Msun;
-        double luminosity_Lsun;
-        double observed_age_years;
-    };
+private:
+  std::string name;
+  double mass_Msun;
+  double luminosity_Lsun;
+  double observed_age_years;
+};
 
 } // namespace physics::stellar
 
