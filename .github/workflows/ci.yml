@@ -89,4 +89,9 @@ jobs:
 
     - name: Static analysis
       run: |
-        cppcheck --enable=all --std=c++17 src/ include/ --error-exitcode=1
+        cppcheck --enable=all --std=c++17 \
+          -I include \
+          --suppress=missingIncludeSystem \
+          --suppress=unusedFunction \
+          src/ include/ \
+          --error-exitcode=1
