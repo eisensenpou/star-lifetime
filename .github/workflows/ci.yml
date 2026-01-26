@@ -133,7 +133,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: [2019, 2022]
+        version: [2022]
         compiler: [MSVC, clang]
 
     steps:
@@ -156,9 +156,9 @@ jobs:
         mkdir build
         cd build
         if ("${{ matrix.compiler }}" -eq "clang") {
-          cmake .. -G "Visual Studio 16 2019" -T "ClangCL" -DCMAKE_CXX_STANDARD=17
+          cmake .. -G "Visual Studio 17 2022" -T "ClangCL" -DCMAKE_CXX_STANDARD=17
         } else {
-          cmake .. -G "Visual Studio 16 2019" -DCMAKE_CXX_STANDARD=17
+          cmake .. -G "Visual Studio 17 2022" -DCMAKE_CXX_STANDARD=17
         }
 
     - name: Build
