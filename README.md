@@ -328,6 +328,17 @@ Validation against analytical solutions:
 | macOS    | Clang 8+ | ✅ Tested |
 | Windows  | MSVC 2019+ | ✅ Tested |
 
+## 🏷️ Releases
+
+Releases are cut by pushing a tag matching `v*` (e.g. `v1.0.0`). This triggers
+[`.github/workflows/release.yml`](.github/workflows/release.yml), which
+creates a GitHub Release for that tag with auto-generated notes.
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
