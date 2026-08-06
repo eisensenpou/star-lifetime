@@ -8,7 +8,7 @@
  * num_analysis::differentiation namespace.
  ****************************/
 
-#include "num_analysis/differentiation.h"
+#include "num_analysis/detail/differentiation.h"
 
 namespace num_analysis::differentiation {
 

@@ -24,14 +24,10 @@
 /*************************
  * Project Includes
  *************************/
-#include "num_analysis/differentiation.h"
-#include "num_analysis/errors.h"
-#include "num_analysis/integration.h"
-#include "physics/constants.h"
-
-// fix this sinan | | |
-//                v v v
-using namespace physics::constants;
+#include "num_analysis/detail/differentiation.h"
+#include "num_analysis/detail/errors.h"
+#include "num_analysis/detail/integration.h"
+#include "physics/detail/constants.h"
 
 namespace physics::stellar {
 

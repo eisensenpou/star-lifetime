@@ -6,7 +6,7 @@
  *           declared in error.h inside the num_analysis::error namespace.
  ****************************/
 
-#include "num_analysis/errors.h"
+#include "num_analysis/detail/errors.h"
 
 namespace num_analysis::errors {
 

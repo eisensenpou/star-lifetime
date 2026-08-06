@@ -1,5 +1,5 @@
 #include "main.h"
-#include "physics/star_physics.h"
+#include "physics/detail/star_physics.h"
 
 int main() {
   std::cout << "=== Stellar Lifetime Simulator ===\n";
@@ -16,7 +16,8 @@ int main() {
     std::cout << "Enter stellar mass (in solar masses): ";
     std::cin >> mass;
 
-    double lifetime = physics::stellar::lifetime(mass * M_SUN);
+    double lifetime =
+        physics::stellar::lifetime(mass * physics::constants::M_SUN);
     std::cout << "Predicted lifetime: " << lifetime << " years\n";
   } else if (choice == 2) {
     physics::stellar::generate_lifetime_table(100);
