@@ -8,11 +8,11 @@
 !*.h
 
 !src/
-!src/num_analysis/
-!src/physics/
+!src/**
 !include/
-!include/num_analysis
-!include/physics
+!include/**
+!python_wrapper/
+!python_wrapper/**
 !tests/
 !resources/
 !resources/app_icon.rc

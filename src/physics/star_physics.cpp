@@ -9,7 +9,7 @@
  *             - star.cpp (10/06/2025)
  *************************/
 
-#include "physics/star_physics.h"
+#include "physics/detail/star_physics.h"
 
 namespace physics::stellar {
 
@@ -25,7 +25,8 @@ double fuel_stock(double M) {
    * @return: Fuel stock in Joules
    * @note: f = 0.1, eta = 0.007, c2 = 9.0e16
    **********************/
-  return F * M * C2 * ETA; // Joules
+  return physics::constants::F * M * physics::constants::C2 *
+         physics::constants::ETA; // Joules
 } // end of fuel_stock function
 
 double luminosity(double M) {
@@ -35,7 +36,8 @@ double luminosity(double M) {
    * @return: Luminosity in Watts
    * @note: L_sun = 3.828e26, M_sun = 1.989e30
    **********************/
-  return L_SUN * std::pow(M / M_SUN, 3.5); // Watts
+  return physics::constants::L_SUN *
+         std::pow(M / physics::constants::M_SUN, 3.5); // Watts
 } // end of luminosity function
 
 double lifetime(double M) {
@@ -46,10 +48,10 @@ double lifetime(double M) {
    * @return: Lifetime in years
    * @note: seconds_per_year = 60.0 * 60.0 * 24.0 * 365.0
    **********************/
-  double S = fuel_stock(M);            // Joules
-  double L = luminosity(M);            // Watts
-  double T_seconds = S / L;            // seconds
-  return T_seconds / SECONDS_PER_YEAR; // years
+  double S = fuel_stock(M);                                // Joules
+  double L = luminosity(M);                                // Watts
+  double T_seconds = S / L;                                // seconds
+  return T_seconds / physics::constants::SECONDS_PER_YEAR; // years
 } // end of lifetime function
 
 /************************
@@ -97,7 +99,7 @@ double L_exp_decay(double t) {
    * @return L_SUN * exp(-k * t), with k ≈ 1e-10 (slow decay)
    *************************/
   const double k = 1e-10; // per year decay rate
-  return L_SUN * std::exp(-k * t);
+  return physics::constants::L_SUN * std::exp(-k * t);
 }
 
 double L_sinusoidal(double t) {
@@ -276,7 +278,7 @@ double Star::massInKg() const {
    * @exception None
    * @return Mass in kg
    **************************/
-  return mass_Msun * M_SUN;
+  return mass_Msun * physics::constants::M_SUN;
 }
 
 double Star::luminosityInWatts() const {
@@ -286,7 +288,7 @@ double Star::luminosityInWatts() const {
    * @exception None
    * @return Luminosity in Watts
    **************************/
-  return luminosity_Lsun * L_SUN;
+  return luminosity_Lsun * physics::constants::L_SUN;
 }
 
 void Star::printSummary() const {
@@ -363,9 +365,11 @@ void Star::evolve(double t_final, double dt) {
   // Use constant luminosity model for now; could be replaced with a function
   // pointer for L(t).
   const double Lw = luminosityInWatts();
+  const double total_fuel_stock = fuel_stock(massInKg());
 
   while (time < t_final && fuel > 0.0) {
-    fuel -= Lw * dt / Lw; // normalize fuel burn (dimensionless)
+    // normalized fuel burn: fraction of total fuel stock consumed this step
+    fuel -= (Lw * dt * physics::constants::SECONDS_PER_YEAR) / total_fuel_stock;
     time += dt;
   }
   observed_age_years += time;
@@ -379,8 +383,8 @@ void generate_lifetime_table(int num_points) {
    * @return None
    * @note
    *************************/
-  const double min_mass = 0.1 * M_SUN;
-  const double max_mass = 20.0 * M_SUN;
+  const double min_mass = 0.1 * physics::constants::M_SUN;
+  const double max_mass = 20.0 * physics::constants::M_SUN;
   const std::string file_path = "../results/lifetime_table.csv";
 
   std::ofstream out(file_path);
@@ -396,7 +400,8 @@ void generate_lifetime_table(int num_points) {
     double L = luminosity(M);
     double T = lifetime(M);
 
-    out << (M / M_SUN) << "," << (L / L_SUN) << "," << T << "\n";
+    out << (M / physics::constants::M_SUN) << ","
+        << (L / physics::constants::L_SUN) << "," << T << "\n";
   }
 
   out.close();
