@@ -7,7 +7,7 @@
  * definitions.
  **********************/
 
-#include "num_analysis/integration.h"
+#include "num_analysis/detail/integration.h"
 
 namespace num_analysis::integration {
 

@@ -6,10 +6,13 @@
  *          including the Star class and numerical stellar lifetime models.
  ************************/
 
-#include "num_analysis/differentiation.h"
-#include "num_analysis/errors.h"
-#include "num_analysis/integration.h"
-#include "physics/star_physics.h"
+#include "num_analysis/detail/differentiation.h"
+#include "num_analysis/detail/errors.h"
+#include "num_analysis/detail/integration.h"
+#include "physics/detail/star_physics.h"
+
+#include <cassert>
+#include <cstdlib>
 
 using namespace physics::constants;
 using namespace physics::stellar;
